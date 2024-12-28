@@ -1,0 +1,878 @@
+	
+Label Root
+{
+	Son: Group
+	Label Group
+	{
+		Son: Agent
+		Label Agent
+		{
+			Var: Action
+			Param: PropPrice
+			Param: Id
+			Param: Order
+			Param: TimeProposal
+			Param: Asset
+			Param: Cash
+			Var: refPrice
+			Param: sAgent
+			Param: bidQuantity
+
+		}
+
+		Param: Range
+		Param: ProbAction
+		Param: MaxTime
+		Param: minAsset
+		Param: maxAsset
+		Param: minCash
+		Param: maxCash
+		Param: minPrice
+		Param: maxPrice
+		Param: minS
+		Param: maxS
+		Var: AgentsAction
+		Param: TotAsset
+		Param: TotCash
+		Param: AvDistPrice
+		Param: DevDistPrice
+
+	}
+
+	Son: Market
+	Label Market
+	{
+		Son: Sell
+		Label Sell
+		{
+			Param: SPrice
+			Param: SId
+
+		}
+
+		Son: Buy
+		Label Buy
+		{
+			Param: BPrice
+			Param: BId
+
+		}
+
+		Son: Test
+		Label Test
+		{
+			Param: s
+			Var: STest
+
+		}
+
+		Param: CoeffQPrice
+		Param: CoeffSPrice
+		Var: SumTransactions
+		Param: PeriodSumTrans
+		Var: QuickPrice
+		Var: SlowPrice
+		Param: Price
+		Var: MarketAction
+		Param: NumBuy
+		Param: NumSell
+		Param: ThresholdBusyMarket
+		Param: Volume
+
+	}
+
+	Var: Init
+	Param: NumAgents
+
+}
+
+
+DATA
+
+Object: Root C	1
+Var: Init 0 n + d n
+Param: NumAgents 0 n + n n	10000
+
+Object: Group C	1
+Param: Range 0 n + n n	0.1
+Param: ProbAction 0 n + n n	0.1
+Param: MaxTime 0 n + n n	10
+Param: minAsset 0 n + n n	100
+Param: maxAsset 0 n + n n	1000
+Param: minCash 0 n + n n	5000
+Param: maxCash 0 n + n n	100000
+Param: minPrice 0 n + n n	9
+Param: maxPrice 0 n + n n	11
+Param: minS 0 n + n n	0.85
+Param: maxS 0 n + n n	0.98
+Var: AgentsAction 0 n + n n
+Param: TotAsset 0 s + n n	0
+Param: TotCash 0 s + n n	0
+Param: AvDistPrice 0 s + n n	0
+Param: DevDistPrice 0 s + n n	0
+
+Object: Agent N	1
+Var: Action 1 n + n n	0
+Param: PropPrice 0 n + n n	0
+Param: Id 0 n + n n	1
+Param: Order 0 n + n n	0
+Param: TimeProposal 0 n + n n	0
+Param: Asset 0 n + n n	0
+Param: Cash 0 n + n n	0
+Var: refPrice 2 n + n n	0	0
+Param: sAgent 0 n + n n	0
+Param: bidQuantity 0 n + n n	0
+
+Object: Market C	1
+Param: CoeffQPrice 0 n + n n	0.1
+Param: CoeffSPrice 0 n + n n	0.01
+Var: SumTransactions 1 s + n n	0
+Param: PeriodSumTrans 0 n + n n	10
+Var: QuickPrice 1 s + n p	10
+Var: SlowPrice 2 s + n p	10	10
+Param: Price 1 s + n p	10
+Var: MarketAction 10 s + d n	0	0	0	0	0	0	0	0	0	0
+Param: NumBuy 0 s + n n	0
+Param: NumSell 0 s + n n	0
+Param: ThresholdBusyMarket 0 n + n n	0.1
+Param: Volume 0 s + n n	0
+
+Object: Sell C	1
+Param: SPrice 0 n + n n	-1
+Param: SId 0 n + n n	0
+
+Object: Buy C	1
+Param: BPrice 0 n + n n	-1
+Param: BId 0 n + n n	0
+
+Object: Test C	10
+Param: s 0 n + n n	5	7.22222222222222	9.44444444444444	11.6666666666667	13.8888888888889	16.1111111111111	18.3333333333333	20.5555555555556	22.7777777777778	25
+Var: STest 2 s + n p	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10
+
+SIM_NUM 1
+SEED 1
+MAX_STEP 10000 1 0 0 0 0 0 0
+EQUATION fun_fin.cpp
+MODELREPORT report_fin1.html
+
+DESCRIPTION
+
+Object_Root
+
+END_DESCRIPTION
+
+Variable_Init
+'Init' appears in the equation for: (Never Used).
+END_DESCRIPTION
+
+Parameter_NumAgents
+
+_INIT_
+All 1 instances equal to 1e+06
+END_DESCRIPTION
+
+Object_Group
+'Group' appears in the equation for: Init.
+END_DESCRIPTION
+
+Parameter_Range
+'Range' appears in the equation for: Action.
+END_DESCRIPTION
+
+Parameter_ProbAction
+'ProbAction' appears in the equation for: Action.
+END_DESCRIPTION
+
+Parameter_MaxTime
+'MaxTime' appears in the equation for: Action.
+END_DESCRIPTION
+
+Parameter_minAsset
+
+_INIT_
+All 1 instances equal to 100
+END_DESCRIPTION
+
+Parameter_maxAsset
+
+_INIT_
+All 1 instances equal to 1000
+END_DESCRIPTION
+
+Parameter_minCash
+
+_INIT_
+All 1 instances equal to 5000
+END_DESCRIPTION
+
+Parameter_maxCash
+
+_INIT_
+All 1 instances equal to 100000
+END_DESCRIPTION
+
+Parameter_minPrice
+
+_INIT_
+All 1 instances equal to 9
+END_DESCRIPTION
+
+Parameter_maxPrice
+
+_INIT_
+All 1 instances equal to 11
+END_DESCRIPTION
+
+Parameter_minS
+
+_INIT_
+All 1 instances equal to 3
+END_DESCRIPTION
+
+Parameter_maxS
+
+_INIT_
+All 1 instances equal to 10
+END_DESCRIPTION
+
+Variable_AgentsAction
+
+END_DESCRIPTION
+
+Parameter_TotAsset
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Parameter_TotCash
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Parameter_AvDistPrice
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Parameter_DevDistPrice
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Object_Agent
+'Agent' appears in the equation for: (Never Used).
+END_DESCRIPTION
+
+Variable_Action
+Action of agents. It can perform three different type activities, depending
+on the state of the agent and on random values:
+
+1) Maintain or remove a previously posted proposal
+If a proposal has already been posted, the agent checks the time. In case
+the proposal lasted for more than TimeProposal time steps, the agent removes
+it from the list. If this is not the case, the agent waits and the function returns.
+
+2) Wait
+Even in case there is not a standing proposal, with probability 1-ProbAction
+the agent does nothing, waiting for the next turn.
+
+3)
+With probability ProbAction, the agent submits a proposal. The current implementation
+allows agents to choose randomly (50%) between a selling or buying proposal.
+The price of the proposal is determined with a uniform random function centered
+on the previous period's Price (see its function computed in MarketAction):
+Price(t-1) * (1+(Uniform[0,1] - 0.5) * Range)
+The proposal is eventually stored creating a new Object descending from Market
+(Sell or Buy for selling or buying proposal respectively). The new Object
+stores the ID of the agent and the proposed price.
+
+
+'Action' appears in the equation for: MarketAction.
+END_DESCRIPTION
+
+Parameter_PropPrice
+'PropPrice' appears in the equation for: Action.
+END_DESCRIPTION
+
+Parameter_Id
+'Id' appears in the equation for: Action, MarketAction.
+END_DESCRIPTION
+
+Parameter_Order
+'Order' appears in the equation for: Action.
+END_DESCRIPTION
+
+Parameter_TimeProposal
+'TimeProposal' appears in the equation for: Action.
+END_DESCRIPTION
+
+Parameter_Asset
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Parameter_Cash
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Variable_refPrice
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Parameter_sAgent
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Parameter_bidQuantity
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Object_Market
+'Market' appears in the equation for: Init.
+END_DESCRIPTION
+
+Parameter_CoeffQPrice
+'CoeffQPrice' appears in the equation for: QuickPrice.
+END_DESCRIPTION
+
+Parameter_CoeffSPrice
+'CoeffSPrice' appears in the equation for: SlowPrice.
+END_DESCRIPTION
+
+Variable_SumTransactions
+Sum of the transactions that took place in the latest PeriodSumTrans-1 periods.
+It is computed by removing from the previous value of SumTransaction the oldest
+component (MarketActions[t - PeriodSumTrans]) and adding the current one
+(MarketAction[t]).
+
+
+'SumTransactions' appears in the equation for: SumTransactions.
+END_DESCRIPTION
+
+Parameter_PeriodSumTrans
+'PeriodSumTrans' appears in the equation for: SumTransactions.
+END_DESCRIPTION
+
+Variable_QuickPrice
+Compute a "quick" smoothed indicator of Price with the function
+QuickPrice(t) = QuickPrice(t-1) * (1-CoeffQPrice) + Price(t) * CoeffQPrice
+
+The higher QuickPrice, the more rapid is the response of the indicator to
+the changes in Price. Note that an identical indicator is computed in SlowPrice,
+the only difference being the value of the coefficients:
+CoeffQPrice > CoeffSPrice
+
+'QuickPrice' appears in the equation for: QuickPrice.
+END_DESCRIPTION
+
+Variable_SlowPrice
+'SlowPrice' appears in the equation for: SlowPrice.
+END_DESCRIPTION
+
+Parameter_Price
+Price at each time step, computed as the average of prices in all the transactions
+in the time step.
+Technically, the value is computed in MarketAction, so that the equation simply
+calls that Variable, and returns its own value. It may well be possible that this
+equation is never executed at all, because the system finds Price always updated
+when MarketAction
+
+'Price' appears in the equation for: Action, MarketAction, QuickPrice, SlowPrice.
+END_DESCRIPTION
+
+Variable_MarketAction
+MarketAction
+Computed after each and every agent has stored its proposal, this function
+completes as many transactions as possible, coupling the best offers (lowest prices)
+with the best requests (highest prices). This is the mechanism used in Italian
+exchange.
+In the model's structure, Market contains two sets of entities for the selling
+and buying proposals. The function sorts them placing in the initial places the
+most attractive ones, and proceeds matching the best elements until the best
+Buy (highest proposed price) is higher than the best Sell (lowest proposed price).
+This function returns the number of transactions that actually took place. It also
+computes the average price of the transactions, stored in Price. 
+
+'MarketAction' appears in the equation for: Price, SumTransactions.
+END_DESCRIPTION
+
+Parameter_NumBuy
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Parameter_NumSell
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Parameter_ThresholdBusyMarket
+
+_INIT_
+All 1 instances equal to 0.001
+END_DESCRIPTION
+
+Parameter_Volume
+
+_INIT_
+All 1 instances equal to 0
+END_DESCRIPTION
+
+Object_Sell
+'Sell' appears in the equation for: Action, MarketAction.
+END_DESCRIPTION
+
+Parameter_SPrice
+'SPrice' appears in the equation for: Action, MarketAction.
+_INIT_
+All 1 instances equal to -1
+END_DESCRIPTION
+
+Parameter_SId
+'SId' appears in the equation for: Action, MarketAction.
+END_DESCRIPTION
+
+Object_Buy
+'Buy' appears in the equation for: Action, MarketAction.
+END_DESCRIPTION
+
+Parameter_BPrice
+'BPrice' appears in the equation for: Action, MarketAction.
+END_DESCRIPTION
+
+Parameter_BId
+'BId' appears in the equation for: Action, MarketAction.
+END_DESCRIPTION
+
+Object_Test
+
+END_DESCRIPTION
+
+Parameter_s
+
+_INIT_
+All 10 instances ranging from 5 to 25 (increments of 2.22222)
+END_DESCRIPTION
+
+Variable_STest
+
+_INIT_
+All 10 instances equal to 10
+END_DESCRIPTION
+
+
+DOCUOBSERVE
+
+END_DOCUOBSERVE
+
+
+DOCUINITIAL
+
+END_DOCUINITIAL
+
+
+EQ_FILE
+//#define EIGENLIB			// uncomment to use Eigen linear algebra library
+
+#include "fun_head_fast.h"
+#include "s-adapt.cpp"
+
+// do not add Equations in this area
+
+object *group, *market;
+MODELBEGIN
+
+// insert your equations here, ONLY between the MODELBEGIN and MODELEND words
+
+// do not add Equations in this area
+
+
+EQUATION("STest")
+// Comment
+
+
+v[1] = V("s");
+v[0]=sadapt(p, "Price", "STest", v[1]);
+
+RESULT(v[0])
+
+EQUATION("refPrice")
+/*
+Private exptected price of the asset for each agent
+*/
+v[0] = V("sAgent");
+//v[1]=sadapt(p, "Price", "refPrice", v[0]);
+v[1] = VL("Price", 1);
+v[2] = VL("refPrice", 1);
+v[3]=v[2]*v[0]+(1-v[0])*v[1];
+RESULT(v[3] )
+
+EQUATION("Action")
+/*
+Action of an agents. It can perform three different type activities, depending
+on the state of the agent and on random values:
+*/
+
+v[0] = VL("Action", 1);
+if(v[0]!=0)
+{//there is an active bid pending on the market
+ v[1] = V("TimeProposal");
+ v[2] = V("MaxTime");
+ if((double)t - v[1] <v[2]) //if the time is not expired
+   END_EQUATION(v[0]);
+
+//withdraw the bid   
+ v[3] = V("Id");
+ cur=p->hook;
+ if(v[0]==-1)
+  { //cur = SEARCH_CNDS(market, "SId", v[3]); //search a sell
+    INCRS(market, "NumSell", -1);
+  }  
+ else
+  {
+   //cur = SEARCH_CNDS(market, "BId", v[3]); //search a buy
+   INCRS(market, "NumBuy", -1);
+  } 
+ if(cur==NULL)
+  INTERACT("MERCA", v[3]);   
+ DELETE(cur);
+} 
+
+v[3] = V("refPrice");
+
+//Previous period's price.
+v[2]=VLS(market,"Price",0);
+v[30] = V("DevDistPrice");
+if(abs(v[3]-v[2])<v[30])
+ END_EQUATION(0);
+
+v[31] = V("Asset");
+v[32] = V("Cash");
+ 
+if(v[3]<v[2])
+  {if(v[31]==0)
+     END_EQUATION(0);
+   v[33]=max(1, round(v[31]*0.2) );
+   v[10]=-1; //sell if the ref price is lower than current price
+   WRITE("bidQuantity", v[33]);
+  }
+else
+ {
+  v[34]=floor(v[32]*0.2/v[3]);
+  if(v[34]==0)
+   END_EQUATION(0);
+  WRITE("bidQuantity", v[34]); 
+  v[10]=1; //buy if ref price is higher than current price
+ }
+v[4]=(v[3]+v[2])/2;//bid price is halfway between ref and current
+
+
+v[20] = V("NumAgents");
+v[21] = V("ThresholdBusyMarket");
+if(v[10]==-1) //if it is a sale
+ {
+  v[22] = V("NumSell");
+  v[23]=v[22]/v[20];
+  if(v[23]>v[21])
+   END_EQUATION(0); //Sorry, busy market
+  INCRS(market, "NumSell", 1);
+  cur = SEARCHS(market, "Sell");
+  if(cur->hook!=NULL)
+    cur = ADDOBJS(market, "Sell");
+  WRITES(cur, "SId", V("Id"));
+  WRITES(cur, "SPrice", v[4]);
+  cur->hook=p;
+  p->hook=cur;
+ }
+else
+ {
+  v[24] = V("NumBuy");
+  v[23]=v[24]/v[20];
+  if(v[23]>v[21])
+   END_EQUATION(0); //Sorry, busy market
+  INCRS(market, "NumBuy", 1);
+  cur = SEARCHS(market, "Buy");
+  if(cur->hook!=NULL)
+   cur=ADDOBJS(market,"Buy");
+  WRITES(cur, "BId", V("Id"));
+  WRITES(cur, "BPrice", v[4]);
+  cur->hook=p;
+  p->hook=cur;
+ }
+
+
+//Store this time step, for future decisions on whether to withdraw the proposal
+WRITE("TimeProposal", (double)t);
+//p->write("TimeProposal",(double)t,0);
+
+
+
+//res=v[1]; //return the value of the action chosen (-1 for sale, 1 for purchase)
+
+RESULT(v[10] )
+
+EQUATION("AgentsAction")
+/*
+
+*/
+
+v[0]=v[1]=v[2]=v[10]=v[11]=0;
+v[7] = VL("Price", 1);
+CYCLE(cur, "Agent")
+ {
+  v[3] = VS(cur, "refPrice")-v[7];
+  v[0]+=v[3];
+  v[1]+=v[3]*v[3];
+  v[2]++;
+  v[10] += VS(cur, "Asset");
+  v[11] += VS(cur, "Cash");
+ } 
+WRITE("TotAsset", v[10]);
+WRITE("TotCash", v[11]);
+v[4]=v[0]/v[2];
+v[5]=v[1]/v[2];
+v[6]=v[5]-v[4]*v[4];
+v[7]=sqrt(v[6]);
+WRITE("AvDistPrice", v[4]);
+WRITE("DevDistPrice", v[7]);
+CYCLE(cur, "Agent")
+{
+ VS(cur, "Action");
+}
+ 
+RESULT(1 )
+
+
+EQUATION("MarketAction")
+/*
+MarketAction
+Computed after each and every agent has stored its proposal, this function
+completes as many transactions as possible, coupling the best offers (lowest prices)
+with the best requests (highest prices). This is the mechanism used in Italian
+exchange.
+In the model's structure, Market contains two sets of entities for the selling
+and buying proposals. The function sorts them placing in the initial places the
+most attractive ones, and proceeds matching the best elements until the best
+Buy (highest proposed price) is higher than the best Sell (lowest proposed price).
+This function returns the number of transactions that actually took place. It also
+computes the average price of the transactions, stored in Price. 
+*/
+
+V("AgentsAction");
+
+
+SORT("Buy", "BPrice", "DOWN");
+SORT("Sell", "SPrice", "UP");
+cur = SEARCH("Buy");
+cur1 = SEARCH("Sell");
+
+v[2]=v[3]=1;
+
+//Cycle through every entities Sell and Buy as long as prices allow a viable transaction
+//Note that there are two "artificial" entities Sell and BPrice with absurd SPrice (100000000)
+//and BPrice (-1) so that the cycle will always stop, even though there may be different
+//number of entities Sell and Buy
+for(v[6]=v[5]=v[4]=0, v[0]=0; cur1!=NULL && cur!=NULL && v[2]>=v[3] ; )
+ {
+  //Prices of the current best proposals
+  v[2]=VS(cur,"BPrice");
+  v[3]=VS(cur1,"SPrice");
+//INTERACT("CHECK", v[2]);
+  //Pointers to the subsequent entities, stored to continue the cycle
+  cur2=brother(cur);
+  cur3=brother(cur1);
+  
+  if(v[2]>v[3]) //If the Buy price is higher than the Sell price...
+   {             //the transaction takes place, notifying the fact to the two involved agents
+    cur4=cur->hook; //the agent who posted the buy
+    cur5=cur1->hook; //the agent who posted the sell
+    v[30]=min(VS(cur4, "bidQuantity"),VS(cur5, "bidQuantity"));
+    v[31]=(v[2]+v[3])/2;
+    INCRS(cur4, "Asset", v[30]);
+    INCRS(cur5, "Asset", -v[30]);
+    INCRS(cur4, "Cash", -v[30]*v[31]);
+    INCRS(cur5, "Cash", v[30]*v[31]);
+    
+    v[32] = INCRS(cur4, "bidQuantity",-v[30]); 
+    v[33] = INCRS(cur5, "bidQuantity",-v[30]);
+     
+    WRITES(cur5,"Action",0);
+    if(v[32]==0)//buyer fulfilled its bid
+     {
+      cur4->hook=NULL;
+      v[22]=INCRS(market, "NumBuy", -1);
+      WRITES(cur4,"Action",0);
+      if(v[22]>0)
+        DELETE(cur);
+      else
+       {cur->hook=NULL;
+        WRITES(cur, "BPrice", -1);  
+        WRITES(cur, "BId", 0);
+       }   
+      cur=cur2;//move to the next buyer bid  
+     }
+    if(v[33]==0) //seller fulfilled its bid
+     {
+      cur5->hook=NULL;
+      v[21]=INCRS(market, "NumSell", -1);
+      WRITES(cur5,"Action",0);
+      if(v[21]>0)
+        DELETE(cur1);
+      else
+       {cur1->hook=NULL;
+        WRITES(cur1, "SPrice", -1);  
+        WRITES(cur1, "SId", 0);
+       }   
+      cur1=cur3;
+     }
+    v[5]+=(v[2]+v[3])/2; //Storing variable for the computation of price
+    v[4]++;              //storing variable for teh computation of number of transaction
+    v[6]+=v[30];
+   }
+ }
+
+
+ if(v[4]!=0) //if at least one transaction took place
+  WRITE("Price",v[5]/v[4]); //compute the average price of the time step
+WRITE("Volume", v[6]);
+//return the number of transactions, useless
+
+RESULT(v[4] )
+
+
+EQUATION("QuickPrice")
+/*
+Compute a "quick" smoothed indicator of Price with the function
+QuickPrice(t) = QuickPrice(t-1) * (1-CoeffQPrice) + Price(t) * CoeffQPrice
+
+The higher QuickPrice, the more rapid is the response of the indicator to
+the changes in Price. Note that an identical indicator is computed in SlowPrice,
+the only difference being the value of the coefficients:
+CoeffQPrice > CoeffSPrice
+*/
+v[0] = V("Price");
+v[1] = VL("QuickPrice", 1);
+v[2] = V("CoeffQPrice");
+
+v[3]=v[1]*(1-v[2])+v[0]*v[2];
+
+RESULT(v[3] )
+
+EQUATION("SlowPrice")
+/*
+Compute a "slow" smoothed indicator of Price with the function
+SlowPrice(t) = SlowPrice(t-1) * (1-CoeffSPrice) + Price(t) * CoeffSPrice
+
+The lower CoeffSPrice, the slower is the response of the indicator to
+the changes in Price. Note that an identical indicator is computed in QuickPrice,
+the only difference being the value of the coefficients:
+CoeffQPrice > CoeffSPrice
+*/
+v[0] = V("Price");
+v[1] = VL("SlowPrice", 1);
+v[2] = V("CoeffSPrice");
+
+v[3]=v[1]*(1-v[2])+v[0]*v[2];
+
+RESULT(v[3] )
+
+EQUATION("SumTransactions")
+/*
+Sum of the transactions that took place in the latest PeriodSumTrans-1 periods.
+It is computed by removing from the previous value of SumTransaction the oldest
+component (MarketActions[t - PeriodSumTrans]) and adding the current one
+(MarketAction[t]).
+*/
+v[0]=V("PeriodSumTrans");
+v[1]=VL("MarketAction",(int)v[0]);
+v[2]=V("MarketAction");
+v[3]=VL("SumTransactions",1);
+v[4]=v[3]-v[1]+v[2];
+
+RESULT(v[4] )
+
+
+
+
+EQUATION("Init")
+// Comment
+market=SEARCH("Market");
+group=SEARCH("Group");
+v[0] = V("NumAgents");
+ADDNOBJS(group, "Agent", v[0]-1);
+v[1]=1;
+
+v[2] = V("minAsset");
+v[3] = V("maxAsset");
+v[4] = V("minPrice");
+v[5] = V("maxPrice");
+v[8] = V("minCash");
+v[9] = V("maxCash");
+v[11] = V("minS");
+v[12] = V("maxS");
+
+v[6]=0;
+CYCLES(group, cur, "Agent")
+{
+ WRITELS(cur, "Action", 0, 0);
+ WRITES(cur, "Id", v[1]++);
+ v[7]=round(uniform(v[2], v[3]));
+ WRITES(cur, "Asset", v[7]);
+ v[7]=uniform(v[4], v[5]);
+ v[6]+=v[7];
+ WRITELS(cur, "refPrice", v[7], 0);
+ WRITELS(cur, "refPrice", v[7], -1);
+ v[10]=round(uniform(v[8], v[9]));
+ WRITES(cur, "Cash", v[10]);
+ WRITELS(cur, "Action", 0, t-1);
+ v[13]=uniform(v[11], v[12]);
+ WRITES(cur, "sAgent", v[13]);
+ 
+}
+v[14]=v[6]/v[0];
+WRITELS(market, "Price", v[14],0);
+
+PARAMETER;
+
+RESULT(1 )
+
+
+MODELEND
+
+// do not add Equations in this area
+
+void close_sim( void )
+{
+	// close simulation special commands go here
+}
+
+void settle_trade(object *seller, object *buyer)
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+END_EQ_FILE
