@@ -86,6 +86,7 @@ if(v[0]!=0)
    else 
     DELETE(cur); 
   } 
+p->hook=NULL;
 } 
 
 v[3] = V("refPrice");
@@ -124,7 +125,10 @@ if(v[10]==-1) //if it is a sale
   v[22] = V("NumSell");
   v[23]=v[22]/v[20];
   if(v[23]>v[21])
-   END_EQUATION(0); //Sorry, busy market
+   {
+    INCRS(market, "RejectedSell", 1);
+    END_EQUATION(0); //Sorry, busy market
+   } 
   INCRS(market, "NumSell", 1);
   cur = SEARCHS(market, "Sell");
   if(cur->hook!=NULL)
@@ -139,7 +143,10 @@ else
   v[24] = V("NumBuy");
   v[23]=v[24]/v[20];
   if(v[23]>v[21])
-   END_EQUATION(0); //Sorry, busy market
+   {
+    INCRS(market, "RejectedBuy", 1);
+    END_EQUATION(0); //Sorry, busy market
+   }
   INCRS(market, "NumBuy", 1);
   cur = SEARCHS(market, "Buy");
   if(cur->hook!=NULL)
@@ -181,6 +188,9 @@ v[6]=v[5]-v[4]*v[4];
 v[7]=sqrt(v[6]);
 WRITE("AvDistPrice", v[4]);
 WRITE("DevDistPrice", v[7]);
+
+WRITES(market, "RejectedSell", 0);
+WRITES(market, "RejectedBuy", 0);
 CYCLE(cur, "Agent")
 {
  VS(cur, "Action");
