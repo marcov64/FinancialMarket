@@ -6,11 +6,8 @@
 // do not add Equations in this area
 
 object *group, *market;
+
 MODELBEGIN
-
-// insert your equations here, ONLY between the MODELBEGIN and MODELEND words
-
-// do not add Equations in this area
 
 
 EQUATION("STest")
@@ -51,17 +48,29 @@ if(v[0]!=0)
  v[3] = V("Id");
  cur=p->hook;
  if(v[0]==-1)
-  { //cur = SEARCH_CNDS(market, "SId", v[3]); //search a sell
-    INCRS(market, "NumSell", -1);
+  { 
+   v[7]=INCRS(market, "NumSell", -1);
+   if(v[7]==0)
+    {
+     WRITES(cur, "SId", 0);
+     WRITES(cur, "SPrice", -1);
+     cur->hook=NULL;
+    }
+   else 
+    DELETE(cur); 
   }  
  else
   {
-   //cur = SEARCH_CNDS(market, "BId", v[3]); //search a buy
-   INCRS(market, "NumBuy", -1);
+   v[8]=INCRS(market, "NumBuy", -1);
+   if(v[8]==0)
+    {
+     WRITES(cur, "BId", 0);
+     WRITES(cur, "BPrice", -1);
+     cur->hook=NULL;
+    }
+   else 
+    DELETE(cur); 
   } 
- if(cur==NULL)
-  INTERACT("MERCA", v[3]);   
- DELETE(cur);
 } 
 
 v[3] = V("refPrice");
@@ -192,17 +201,16 @@ SORT("Sell", "SPrice", "UP");
 cur = SEARCH("Buy");
 cur1 = SEARCH("Sell");
 
-v[2]=v[3]=1;
+v[2]=VS(cur,"BPrice");
+v[3]=VS(cur1,"SPrice");
 
-//Cycle through every entities Sell and Buy as long as prices allow a viable transaction
-//Note that there are two "artificial" entities Sell and BPrice with absurd SPrice (100000000)
-//and BPrice (-1) so that the cycle will always stop, even though there may be different
-//number of entities Sell and Buy
-for(v[6]=v[5]=v[4]=0, v[0]=0; cur1!=NULL && cur!=NULL && cur1->hook!=NULL && cur->hook!=NULL && v[2]>=v[3] ; )
+for(v[9]=v[6]=v[5]=v[4]=0, v[0]=0; cur1!=NULL && cur!=NULL && cur1->hook!=NULL && cur->hook!=NULL && v[2]>v[3] ; )
  {
   //Prices of the current best proposals
-  v[2]=VS(cur,"BPrice");
-  v[3]=VS(cur1,"SPrice");
+  if(v[9]++>10000)
+   INTERACT("LOOP", v[9]);
+  
+ 
 //INTERACT("CHECK", v[2]);
   //Pointers to the subsequent entities, stored to continue the cycle
   cur2=brother(cur);
@@ -254,6 +262,11 @@ for(v[6]=v[5]=v[4]=0, v[0]=0; cur1!=NULL && cur!=NULL && cur1->hook!=NULL && cur
     v[5]+=(v[2]+v[3])/2; //Storing variable for the computation of price
     v[4]++;              //storing variable for teh computation of number of transaction
     v[6]+=v[30];
+    if(cur!=NULL && cur1!=NULL)
+     {
+      v[2]=VS(cur,"BPrice");
+      v[3]=VS(cur1,"SPrice");
+     } 
    }
  }
 
