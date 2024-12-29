@@ -11,8 +11,10 @@ MODELBEGIN
 
 
 EQUATION("STest")
-// Comment
-
+/*
+Experimental tracking variable adapting to the market price following a logistic-like pattern
+The parameter 's' controls the speed of adaptation, the higher the quicker
+*/
 
 v[1] = V("s");
 v[0]=sadapt(p, "Price", "STest", v[1]);
@@ -22,6 +24,7 @@ RESULT(v[0])
 EQUATION("refPrice")
 /*
 Private exptected price of the asset for each agent
+The reference price is used to determine whether to post a bid to buy/sell the asset
 */
 v[0] = V("sAgent");
 //v[1]=sadapt(p, "Price", "refPrice", v[0]);
@@ -32,8 +35,20 @@ RESULT(v[3] )
 
 EQUATION("Action")
 /*
-Action of an agents. It can perform three different type activities, depending
-on the state of the agent and on random values:
+Action of an agent.
+When the past action is -1 or +1 there is a bid currently posted. The bid is left for MaxTime periods, after which is removed.
+When past action is zero it means that there are no bids currently posted and the agent considers whether to post a bid.
+
+The present implementation posts a bid if the reference price is sufficiently far away from the past period market price.
+The bid needs to fix three info:
+- direction (buy or sell)
+- bid price
+- number of units of the asset
+
+The bidding routine consider bidding 20% of the units in case of selling and 20% of the cash in case of buying. Constraints apply, so that a bidder cannot sell or buy unless it has sufficient assets or cash, respectively.
+
+The price is set at the half between the reference price and past market price. 
+
 */
 
 v[0] = VL("Action", 1);
@@ -138,17 +153,13 @@ else
 
 //Store this time step, for future decisions on whether to withdraw the proposal
 WRITE("TimeProposal", (double)t);
-//p->write("TimeProposal",(double)t,0);
-
-
-
-//res=v[1]; //return the value of the action chosen (-1 for sale, 1 for purchase)
 
 RESULT(v[10] )
 
 EQUATION("AgentsAction")
 /*
-
+Global variable setting ensuring that all agents update their Action
+Before letting agents make their decision the routine computes the average reference price and the standard deviation from the actual past market price.
 */
 
 v[0]=v[1]=v[2]=v[10]=v[11]=0;
@@ -207,7 +218,7 @@ v[3]=VS(cur1,"SPrice");
 for(v[9]=v[6]=v[5]=v[4]=0, v[0]=0; cur1!=NULL && cur!=NULL && cur1->hook!=NULL && cur->hook!=NULL && v[2]>v[3] ; )
  {
   //Prices of the current best proposals
-  if(v[9]++>10000)
+  if(v[9]++>100000)
    INTERACT("LOOP", v[9]);
   
  
@@ -315,26 +326,16 @@ v[3]=v[1]*(1-v[2])+v[0]*v[2];
 
 RESULT(v[3] )
 
-EQUATION("SumTransactions")
-/*
-Sum of the transactions that took place in the latest PeriodSumTrans-1 periods.
-It is computed by removing from the previous value of SumTransaction the oldest
-component (MarketActions[t - PeriodSumTrans]) and adding the current one
-(MarketAction[t]).
-*/
-v[0]=V("PeriodSumTrans");
-v[1]=VL("MarketAction",(int)v[0]);
-v[2]=V("MarketAction");
-v[3]=VL("SumTransactions",1);
-v[4]=v[3]-v[1]+v[2];
-
-RESULT(v[4] )
-
-
 
 
 EQUATION("Init")
-// Comment
+/*
+Initialization routine performing actions required before starting the simulation and never repeated again:
+- create a group of object Agent
+- assign to each a random initial reference price, cash and number of assets
+- compute the initial (fake) past market price
+
+*/
 market=SEARCH("Market");
 group=SEARCH("Group");
 v[0] = V("NumAgents");
@@ -383,11 +384,6 @@ MODELEND
 void close_sim( void )
 {
 	// close simulation special commands go here
-}
-
-void settle_trade(object *seller, object *buyer)
-{
-
 }
 
 

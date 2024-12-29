@@ -87,7 +87,7 @@ DATA
 
 Object: Root C	1
 Var: Init 0 n + d n
-Param: NumAgents 0 n + n n	10000
+Param: NumAgents 0 n + n n	100000
 
 Object: Group C	1
 Param: MaxTime 0 n + n n	10
